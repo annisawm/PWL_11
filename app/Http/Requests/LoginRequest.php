@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Foundation\Http\FormRequest;
+
 class LoginRequest extends ApiRequest
 {
 
@@ -13,7 +15,7 @@ class LoginRequest extends ApiRequest
     public function rules()
     {
         return [
-            'email' => 'required|string|email',
+            'email' => 'required|string|email|max:225',
             'password' => 'required|string|min:8',
         ];
     }

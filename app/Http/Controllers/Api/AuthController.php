@@ -1,8 +1,12 @@
 <?php
 
 namespace App\Http\Controllers\Api;
+
 use App\Models\User;
 use App\Traits\ApiResponse;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\RegisterRequest;
+use App\Http\Requests\LoginRequest;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Http\Exceptions\HttpResponseException;
@@ -15,11 +19,11 @@ class AuthController extends Controller
     use ApiResponse;
 
     public function register(RegisterRequest $request){
-        $validate = $request->validated();
+        $validated = $request->validated();
         $user = User::create([
             'name' => $validated['name'],
             'email' => $validated['email'],
-            'password' => Has::make($validated['password']),
+            'password' => Hash::make($validated['password']),
         ]);
 
         $token = $user->createToken('auth_token')->plainTextToken;
